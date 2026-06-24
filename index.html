@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f172a" />
+    <title>Checklist Blocs Mac mini</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Intervention</p>
+          <h1>Checklist Mac mini</h1>
+        </div>
+        <button class="icon-button" id="resetButton" type="button" aria-label="Réinitialiser la checklist">
+          ↺
+        </button>
+      </header>
+
+      <section class="summary" aria-label="Progression globale">
+        <div>
+          <span id="doneCount">0</span>/<span id="totalCount">0</span>
+          <small>tâches faites</small>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-bar" id="overallProgress"></div>
+        </div>
+      </section>
+
+      <nav class="tabs" aria-label="Blocs">
+        <button class="tab is-active" type="button" data-block="bloc-1">Bloc 1</button>
+        <button class="tab" type="button" data-block="bloc-2">Bloc 2</button>
+        <button class="tab" type="button" data-block="bloc-3">Bloc 3</button>
+      </nav>
+
+      <section class="blocks">
+        <article class="block is-active" id="bloc-1">
+          <div class="block-head">
+            <div>
+              <p class="eyebrow">9h-13h</p>
+              <h2>Configuration machine + quick win</h2>
+            </div>
+            <span class="badge" data-badge="bloc-1">0%</span>
+          </div>
+          <p class="context">Présence de Sébastien indispensable : ce sont ses comptes.</p>
+          <div class="task-list" data-list="bloc-1"></div>
+        </article>
+
+        <article class="block" id="bloc-2">
+          <div class="block-head">
+            <div>
+              <p class="eyebrow">14h-18h</p>
+              <h2>GitHub et lecture du code</h2>
+            </div>
+            <span class="badge" data-badge="bloc-2">0%</span>
+          </div>
+          <div class="task-list" data-list="bloc-2"></div>
+        </article>
+
+        <article class="block" id="bloc-3">
+          <div class="block-head">
+            <div>
+              <p class="eyebrow">À caler</p>
+              <h2>Adyen</h2>
+            </div>
+            <span class="badge" data-badge="bloc-3">0%</span>
+          </div>
+          <div class="task-list" data-list="bloc-3"></div>
+        </article>
+      </section>
+
+      <section class="notes-panel" aria-label="Notes">
+        <label for="notes">Notes rapides</label>
+        <textarea id="notes" rows="4" placeholder="Décisions, accès manquants, prochaines étapes..."></textarea>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
