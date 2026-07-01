@@ -88,7 +88,7 @@
           <div class="block-head">
             <div>
               <p class="eyebrow">Module 2.2</p>
-              <h2>Agent de Sabina</h2>
+              <h2>Agent de TIBER</h2>
             </div>
             <span class="badge" data-badge="module-2-2">0%</span>
           </div>
@@ -97,21 +97,19 @@
         </article>
       </section>
 
-      <section class="sync-panel" aria-label="Mémoire partagée">
+      <section class="sync-panel" aria-label="Mémoire">
         <div>
           <p class="eyebrow">Mémoire</p>
           <h2>Suivi téléphone + ordinateur</h2>
         </div>
-        <p class="context">La sauvegarde locale est automatique. Pour synchroniser entre appareils, active un Gist privé GitHub avec un token classique ayant le scope <code>gist</code>.</p>
-        <label for="gistToken">Token GitHub</label>
-        <input id="gistToken" type="password" autocomplete="off" placeholder="ghp_..." />
-        <label for="gistId">Gist ID optionnel</label>
-        <input id="gistId" type="text" autocomplete="off" placeholder="Laisser vide pour créer ou retrouver automatiquement" />
+        <p class="context">Les coches et les notes sont sauvegardées automatiquement sur cet appareil. Pour passer le suivi sur un autre appareil, copie la mémoire ici puis colle-la là-bas.</p>
         <div class="sync-actions">
-          <button class="secondary-button" id="saveSyncButton" type="button">Activer la mémoire</button>
-          <button class="secondary-button" id="syncNowButton" type="button">Synchroniser</button>
+          <button class="secondary-button" id="copyMemoryButton" type="button">Copier la mémoire</button>
+          <button class="secondary-button" id="importMemoryButton" type="button">Importer ici</button>
         </div>
-        <p class="sync-status" id="syncStatus">Mémoire locale active.</p>
+        <label for="memoryCode">Mémoire copiée</label>
+        <textarea id="memoryCode" rows="3" placeholder="Colle ici la mémoire copiée depuis l'autre appareil."></textarea>
+        <p class="sync-status" id="syncStatus">Mémoire automatique active sur cet appareil.</p>
       </section>
 
       <section class="notes-panel" aria-label="Notes">

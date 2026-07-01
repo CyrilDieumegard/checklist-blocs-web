@@ -1,7 +1,4 @@
 const storageKey = "checklist-lilipass-v2";
-const syncConfigKey = "checklist-lilipass-sync-v1";
-const gistFilename = "checklist-lilipass-state.json";
-const gistDescription = "Checklist Lilipass shared progress";
 
 const blocks = [
   {
@@ -63,14 +60,14 @@ const blocks = [
   {
     id: "module-2-2",
     tasks: [
-      "Créer l'agent dédié à Sabina",
+      "Créer l'agent dédié à TIBER",
       "Définir le périmètre : suivi de projet, procédures, Odoo et support interne",
       "Brancher les MCP et sources utiles",
       "Configurer les procédures et informations de référence",
       "Créer les routines de suivi : tâches ouvertes, relances, décisions, prochaines étapes",
       "Tester une demande de support interne",
       "Tester un cas Odoo sans action sensible automatique",
-      "Configurer la mémoire de travail de Sabina",
+      "Configurer la mémoire de travail de TIBER",
       "Poser la règle de sécurité : validation humaine obligatoire sur actions sensibles",
       "Récap des usages quotidiens à garder"
     ]
@@ -84,8 +81,6 @@ const defaultState = {
 };
 
 let state = loadState();
-let syncConfig = loadSyncConfig();
-let syncTimer;
 
 function readJson(key, fallback) {
   try {
@@ -103,21 +98,9 @@ function loadState() {
   return { ...defaultState, ...readJson(storageKey, {}) };
 }
 
-function loadSyncConfig() {
-  return readJson(syncConfigKey, { token: "", gistId: "" });
-}
-
-function saveState(options = {}) {
+function saveState() {
   state.updatedAt = Date.now();
   writeJson(storageKey, state);
-
-  if (options.sync !== false) {
-    queueSync();
-  }
-}
-
-function saveSyncConfig() {
-  writeJson(syncConfigKey, syncConfig);
 }
 
 function taskId(blockId, index) {
@@ -204,156 +187,71 @@ function setupReset() {
     renderTasks();
     document.getElementById("notes").value = "";
     updateProgress();
-    queueSync(0);
+    setSyncStatus("Mémoire réinitialisée sur cet appareil.");
   });
-}
-
-function setupSync() {
-  const tokenInput = document.getElementById("gistToken");
-  const gistInput = document.getElementById("gistId");
-  tokenInput.value = syncConfig.token || "";
-  gistInput.value = syncConfig.gistId || "";
-
-  document.getElementById("saveSyncButton").addEventListener("click", async () => {
-    syncConfig = {
-      token: tokenInput.value.trim(),
-      gistId: gistInput.value.trim()
-    };
-    saveSyncConfig();
-    await syncWithCloud({ forceSetup: true });
-    gistInput.value = syncConfig.gistId || "";
-  });
-
-  document.getElementById("syncNowButton").addEventListener("click", () => syncWithCloud({ forceSetup: true }));
-
-  if (syncConfig.token) {
-    queueSync(500);
-    setInterval(() => syncWithCloud(), 30000);
-  }
 }
 
 function setSyncStatus(message) {
   document.getElementById("syncStatus").textContent = message;
 }
 
-function queueSync(delay = 900) {
-  if (!syncConfig.token) return;
-  clearTimeout(syncTimer);
-  syncTimer = setTimeout(() => syncWithCloud(), delay);
+function encodeMemory() {
+  const payload = {
+    version: 1,
+    state
+  };
+  return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
 }
 
-async function githubRequest(path, options = {}) {
-  const response = await fetch(`https://api.github.com${path}`, {
-    ...options,
-    headers: {
-      Accept: "application/vnd.github+json",
-      Authorization: `Bearer ${syncConfig.token}`,
-      "Content-Type": "application/json",
-      "X-GitHub-Api-Version": "2022-11-28",
-      ...(options.headers || {})
-    }
-  });
-
-  if (!response.ok) {
-    throw new Error(`GitHub ${response.status}`);
+function decodeMemory(code) {
+  const payload = JSON.parse(decodeURIComponent(escape(atob(code.trim()))));
+  if (!payload?.state || typeof payload.state !== "object") {
+    throw new Error("format invalide");
   }
-
-  return response.json();
+  return payload.state;
 }
 
-async function findExistingGist() {
-  const gists = await githubRequest("/gists");
-  return gists.find((gist) => gist.files && gist.files[gistFilename]);
-}
-
-async function createSyncGist() {
-  const gist = await githubRequest("/gists", {
-    method: "POST",
-    body: JSON.stringify({
-      description: gistDescription,
-      public: false,
-      files: {
-        [gistFilename]: {
-          content: JSON.stringify(state, null, 2)
-        }
-      }
-    })
-  });
-
-  syncConfig.gistId = gist.id;
-  saveSyncConfig();
-  return gist;
-}
-
-async function ensureGist() {
-  if (syncConfig.gistId) {
-    return githubRequest(`/gists/${syncConfig.gistId}`);
-  }
-
-  const existing = await findExistingGist();
-  if (existing) {
-    syncConfig.gistId = existing.id;
-    saveSyncConfig();
-    return githubRequest(`/gists/${syncConfig.gistId}`);
-  }
-
-  return createSyncGist();
-}
-
-function parseCloudState(gist) {
-  const file = gist.files?.[gistFilename];
-  if (!file?.content) return null;
-
-  try {
-    return JSON.parse(file.content);
-  } catch {
-    return null;
-  }
-}
-
-async function pushStateToGist() {
-  await githubRequest(`/gists/${syncConfig.gistId}`, {
-    method: "PATCH",
-    body: JSON.stringify({
-      files: {
-        [gistFilename]: {
-          content: JSON.stringify(state, null, 2)
-        }
-      }
-    })
-  });
-}
-
-function applyCloudState(cloudState) {
-  state = { ...defaultState, ...cloudState };
+function applyImportedState(importedState) {
+  state = { ...defaultState, ...importedState, updatedAt: Date.now() };
   writeJson(storageKey, state);
   renderTasks();
   document.getElementById("notes").value = state.notes || "";
   updateProgress();
 }
 
-async function syncWithCloud(options = {}) {
-  if (!syncConfig.token) {
-    if (options.forceSetup) setSyncStatus("Ajoute un token GitHub avec le droit gist pour activer la mémoire partagée.");
-    return;
+async function copyToClipboard(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return true;
   }
 
-  try {
-    setSyncStatus("Synchronisation en cours...");
-    const gist = await ensureGist();
-    const cloudState = parseCloudState(gist);
+  return false;
+}
 
-    if (cloudState && Number(cloudState.updatedAt || 0) > Number(state.updatedAt || 0)) {
-      applyCloudState(cloudState);
-      setSyncStatus("Mémoire récupérée depuis GitHub.");
-      return;
+function setupSync() {
+  const memoryCode = document.getElementById("memoryCode");
+
+  document.getElementById("copyMemoryButton").addEventListener("click", async () => {
+    const code = encodeMemory();
+    memoryCode.value = code;
+    memoryCode.select();
+
+    const copied = await copyToClipboard(code).catch(() => false);
+    setSyncStatus(copied ? "Mémoire copiée. Colle-la sur l'autre appareil." : "Mémoire prête. Copie le texte sélectionné.");
+  });
+
+  document.getElementById("importMemoryButton").addEventListener("click", async () => {
+    try {
+      if (!memoryCode.value.trim() && navigator.clipboard?.readText) {
+        memoryCode.value = await navigator.clipboard.readText();
+      }
+      const importedState = decodeMemory(memoryCode.value);
+      applyImportedState(importedState);
+      setSyncStatus("Mémoire importée dans ce navigateur.");
+    } catch {
+      setSyncStatus("Mémoire illisible. Copie-colle le bloc complet depuis l'autre appareil.");
     }
-
-    await pushStateToGist();
-    setSyncStatus("Mémoire synchronisée avec GitHub.");
-  } catch (error) {
-    setSyncStatus(`Synchronisation impossible : ${error.message}. Vérifie le token ou le Gist ID.`);
-  }
+  });
 }
 
 renderTasks();
