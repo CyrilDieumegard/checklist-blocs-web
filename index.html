@@ -4,15 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0f172a" />
-    <title>Checklist Blocs Mac mini</title>
+    <title>Checklist Mission IA</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="app-shell">
       <header class="topbar">
         <div>
-          <p class="eyebrow">Intervention</p>
-          <h1>Checklist Mac mini</h1>
+          <p class="eyebrow">Mission IA</p>
+          <h1>Checklist Lilipass</h1>
         </div>
         <button class="icon-button" id="resetButton" type="button" aria-label="Réinitialiser la checklist">
           ↺
@@ -29,46 +29,89 @@
         </div>
       </section>
 
-      <nav class="tabs" aria-label="Blocs">
-        <button class="tab is-active" type="button" data-block="bloc-1">Bloc 1</button>
-        <button class="tab" type="button" data-block="bloc-2">Bloc 2</button>
-        <button class="tab" type="button" data-block="bloc-3">Bloc 3</button>
+      <nav class="tabs" aria-label="Modules">
+        <button class="tab is-active" type="button" data-block="module-1-1-bloc-1">1.1 Bloc 1</button>
+        <button class="tab" type="button" data-block="module-1-1-bloc-2">1.1 Bloc 2</button>
+        <button class="tab" type="button" data-block="module-1-1-bloc-3">1.1 Bloc 3</button>
+        <button class="tab" type="button" data-block="module-2-1">2.1</button>
+        <button class="tab" type="button" data-block="module-2-2">2.2</button>
       </nav>
 
       <section class="blocks">
-        <article class="block is-active" id="bloc-1">
+        <article class="block is-active" id="module-1-1-bloc-1">
           <div class="block-head">
             <div>
-              <p class="eyebrow">9h-13h</p>
+              <p class="eyebrow">Module 1.1</p>
               <h2>Configuration machine + quick win</h2>
             </div>
-            <span class="badge" data-badge="bloc-1">0%</span>
+            <span class="badge" data-badge="module-1-1-bloc-1">0%</span>
           </div>
           <p class="context">Présence de Sébastien indispensable : ce sont ses comptes.</p>
-          <div class="task-list" data-list="bloc-1"></div>
+          <div class="task-list" data-list="module-1-1-bloc-1"></div>
         </article>
 
-        <article class="block" id="bloc-2">
+        <article class="block" id="module-1-1-bloc-2">
           <div class="block-head">
             <div>
-              <p class="eyebrow">14h-18h</p>
+              <p class="eyebrow">Module 1.1</p>
               <h2>GitHub et lecture du code</h2>
             </div>
-            <span class="badge" data-badge="bloc-2">0%</span>
+            <span class="badge" data-badge="module-1-1-bloc-2">0%</span>
           </div>
-          <div class="task-list" data-list="bloc-2"></div>
+          <div class="task-list" data-list="module-1-1-bloc-2"></div>
         </article>
 
-        <article class="block" id="bloc-3">
+        <article class="block" id="module-1-1-bloc-3">
           <div class="block-head">
             <div>
-              <p class="eyebrow">À caler</p>
+              <p class="eyebrow">Module 1.1</p>
               <h2>Adyen</h2>
             </div>
-            <span class="badge" data-badge="bloc-3">0%</span>
+            <span class="badge" data-badge="module-1-1-bloc-3">0%</span>
           </div>
-          <div class="task-list" data-list="bloc-3"></div>
+          <div class="task-list" data-list="module-1-1-bloc-3"></div>
         </article>
+
+        <article class="block" id="module-2-1">
+          <div class="block-head">
+            <div>
+              <p class="eyebrow">Module 2.1</p>
+              <h2>Agent personnel de Sébastien</h2>
+            </div>
+            <span class="badge" data-badge="module-2-1">0%</span>
+          </div>
+          <p class="context">Objectif : accès aux chiffres réels depuis le téléphone, avec validation humaine sur les actions sensibles.</p>
+          <div class="task-list" data-list="module-2-1"></div>
+        </article>
+
+        <article class="block" id="module-2-2">
+          <div class="block-head">
+            <div>
+              <p class="eyebrow">Module 2.2</p>
+              <h2>Agent de Sabina</h2>
+            </div>
+            <span class="badge" data-badge="module-2-2">0%</span>
+          </div>
+          <p class="context">Objectif : suivi de projet, procédures, Odoo et support interne, avec validation humaine sur toute action sensible.</p>
+          <div class="task-list" data-list="module-2-2"></div>
+        </article>
+      </section>
+
+      <section class="sync-panel" aria-label="Mémoire partagée">
+        <div>
+          <p class="eyebrow">Mémoire</p>
+          <h2>Suivi téléphone + ordinateur</h2>
+        </div>
+        <p class="context">La sauvegarde locale est automatique. Pour synchroniser entre appareils, active un Gist privé GitHub avec un token classique ayant le scope <code>gist</code>.</p>
+        <label for="gistToken">Token GitHub</label>
+        <input id="gistToken" type="password" autocomplete="off" placeholder="ghp_..." />
+        <label for="gistId">Gist ID optionnel</label>
+        <input id="gistId" type="text" autocomplete="off" placeholder="Laisser vide pour créer ou retrouver automatiquement" />
+        <div class="sync-actions">
+          <button class="secondary-button" id="saveSyncButton" type="button">Activer la mémoire</button>
+          <button class="secondary-button" id="syncNowButton" type="button">Synchroniser</button>
+        </div>
+        <p class="sync-status" id="syncStatus">Mémoire locale active.</p>
       </section>
 
       <section class="notes-panel" aria-label="Notes">
