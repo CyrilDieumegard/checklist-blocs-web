@@ -130,18 +130,26 @@ h2 {
   position: sticky;
   top: 0;
   z-index: 2;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  display: flex;
   gap: 8px;
+  overflow-x: auto;
   padding: 8px 0;
   background: rgba(238, 242, 247, 0.92);
   backdrop-filter: blur(12px);
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .tab {
+  flex: 0 0 auto;
+  min-width: 72px;
   min-height: 42px;
   border: 1px solid var(--line);
   border-radius: 8px;
+  padding: 0 12px;
   background: var(--panel);
   color: var(--muted);
   font-weight: 800;

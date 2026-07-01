@@ -3,6 +3,10 @@ const storageKey = "checklist-lilipass-v2";
 const blocks = [
   {
     id: "module-1-1-bloc-1",
+    tab: "1.1 Bloc 1",
+    eyebrow: "Module 1.1",
+    title: "Configuration machine + quick win",
+    context: "Présence de Sébastien indispensable : ce sont ses comptes.",
     tasks: [
       "Déballage et branchement du Mac mini",
       "Démarrage et connexion wifi",
@@ -22,6 +26,9 @@ const blocks = [
   },
   {
     id: "module-1-1-bloc-2",
+    tab: "1.1 Bloc 2",
+    eyebrow: "Module 1.1",
+    title: "GitHub et lecture du code",
     tasks: [
       "Connexion au compte GitHub",
       "Liaison de Codex avec GitHub",
@@ -35,6 +42,9 @@ const blocks = [
   },
   {
     id: "module-1-1-bloc-3",
+    tab: "1.1 Bloc 3",
+    eyebrow: "Module 1.1",
+    title: "Adyen",
     tasks: [
       "Création d'un utilisateur dédié et d'une clé API Adyen en lecture",
       "Connexion d'Adyen via son MCP officiel",
@@ -43,7 +53,50 @@ const blocks = [
     ]
   },
   {
+    id: "module-1-2",
+    tab: "1.2",
+    eyebrow: "Module 1.2",
+    title: "Créer des outils sur mesure",
+    context: "Objectif : fabriquer des outils internes simples selon les besoins réels de l'équipe.",
+    tasks: [
+      "Lister les besoins prioritaires de visibilité business",
+      "Choisir un premier outil à construire",
+      "Définir les sources de données nécessaires : Odoo, Adyen ou autre",
+      "Créer un dashboard chiffre d'affaires",
+      "Afficher les chiffres clés en temps réel ou quasi réel",
+      "Créer une vue ventes par soirée",
+      "Créer une vue ventes par produit",
+      "Créer une vue ventes par événement",
+      "Documenter comment demander un nouvel outil à Codex",
+      "Tester l'outil avec un cas réel",
+      "Noter les améliorations et quick wins suivants"
+    ]
+  },
+  {
+    id: "module-1-3",
+    tab: "1.3",
+    eyebrow: "Module 1.3",
+    title: "Agent technique",
+    context: "Objectif : mettre en place un copilote technique permanent, avec validation humaine avant toute action sensible.",
+    tasks: [
+      "Définir le périmètre de l'agent technique",
+      "Configurer l'agent dédié au code",
+      "Lui donner accès au dépôt GitHub utile",
+      "Faire générer une documentation du projet",
+      "Faire lancer une analyse de bugs potentiels",
+      "Faire proposer des tests utiles",
+      "Définir les actions interdites sans validation humaine",
+      "Créer une procédure de revue avant modification du code",
+      "Tester l'agent sur une vraie demande de maintenance",
+      "Documenter le mode d'emploi pour l'équipe"
+    ]
+  },
+  {
     id: "module-2-1",
+    tab: "2.1",
+    eyebrow: "Module 2.1",
+    title: "Agent personnel de Sébastien",
+    context: "Objectif : accès aux chiffres réels depuis le téléphone, avec validation humaine sur les actions sensibles.",
     tasks: [
       "Installer OpenClaw sur la machine privée de Sébastien",
       "Brancher les MCP utiles",
@@ -59,6 +112,10 @@ const blocks = [
   },
   {
     id: "module-2-2",
+    tab: "2.2",
+    eyebrow: "Module 2.2",
+    title: "Agent de TIBER",
+    context: "Objectif : suivi de projet, procédures, Odoo et support interne, avec validation humaine sur toute action sensible.",
     tasks: [
       "Créer l'agent dédié à TIBER",
       "Définir le périmètre : suivi de projet, procédures, Odoo et support interne",
@@ -70,6 +127,63 @@ const blocks = [
       "Configurer la mémoire de travail de TIBER",
       "Poser la règle de sécurité : validation humaine obligatoire sur actions sensibles",
       "Récap des usages quotidiens à garder"
+    ]
+  },
+  {
+    id: "transition-marque-blanche",
+    tab: "Transition",
+    eyebrow: "Accompagnement",
+    title: "Transition marque blanche",
+    context: "Objectif : guider l'équipe pour rendre l'application transmissible, sans reprendre le rôle de développeur produit.",
+    tasks: [
+      "Clarifier l'objectif marque blanche",
+      "Identifier les parties de l'application à documenter",
+      "Faire produire une documentation du code par Codex",
+      "Repérer les zones à structurer ou clarifier",
+      "Définir les jalons de transition",
+      "Accompagner l'équipe dans le pilotage de Codex",
+      "Vérifier que l'équipe comprend les changements proposés",
+      "Séparer formation, pilotage et développement applicatif",
+      "Documenter les décisions prises à chaque jalon",
+      "Faire un point régulier sur ce qui reste hors périmètre"
+    ]
+  },
+  {
+    id: "module-3",
+    tab: "3",
+    eyebrow: "Module 3",
+    title: "Outils IA métier",
+    context: "Objectif : gagner du temps sur les tâches récurrentes sans développement lourd.",
+    tasks: [
+      "Choisir les outils IA métier vraiment utiles",
+      "Configurer les comptes rendus de réunion avec Granola",
+      "Définir le format de compte rendu attendu",
+      "Tester une réunion réelle",
+      "Explorer les usages voix et vidéos marketing",
+      "Tester un outil TTS pour une narration courte",
+      "Tester HeyGen ou équivalent pour une vidéo simple",
+      "Brancher ou auditer les analytics app et site",
+      "Identifier DataFast, PostHog ou l'outil prioritaire",
+      "Créer une mini procédure pour chaque outil retenu"
+    ]
+  },
+  {
+    id: "module-4",
+    tab: "4",
+    eyebrow: "Module 4",
+    title: "Veille technologique",
+    context: "Objectif : garder l'équipe à jour sans qu'elle doive suivre toute l'actualité IA.",
+    tasks: [
+      "Définir le rythme du rendez-vous de veille",
+      "Créer une liste de sources à suivre",
+      "Préparer un format de synthèse mensuelle",
+      "Lister les nouveautés modèles importantes",
+      "Lister les nouveautés outils importantes",
+      "Identifier les évolutions utiles pour Codex",
+      "Identifier les évolutions utiles pour les agents",
+      "Prévoir un point de mise à jour des outils existants",
+      "Conserver une trace des décisions de veille",
+      "Transformer les nouveautés utiles en prochaines actions"
     ]
   }
 ];
@@ -105,6 +219,60 @@ function saveState() {
 
 function taskId(blockId, index) {
   return `${blockId}-${index}`;
+}
+
+function renderShell() {
+  const tabs = document.getElementById("tabs");
+  const blocksContainer = document.getElementById("blocks");
+
+  tabs.replaceChildren();
+  blocksContainer.replaceChildren();
+
+  blocks.forEach((block, index) => {
+    const tab = document.createElement("button");
+    tab.className = `tab${index === 0 ? " is-active" : ""}`;
+    tab.type = "button";
+    tab.dataset.block = block.id;
+    tab.setAttribute("aria-selected", String(index === 0));
+    tab.textContent = block.tab;
+    tabs.append(tab);
+
+    const article = document.createElement("article");
+    article.className = `block${index === 0 ? " is-active" : ""}`;
+    article.id = block.id;
+
+    const head = document.createElement("div");
+    head.className = "block-head";
+
+    const titleWrap = document.createElement("div");
+    const eyebrow = document.createElement("p");
+    eyebrow.className = "eyebrow";
+    eyebrow.textContent = block.eyebrow;
+
+    const title = document.createElement("h2");
+    title.textContent = block.title;
+    titleWrap.append(eyebrow, title);
+
+    const badge = document.createElement("span");
+    badge.className = "badge";
+    badge.dataset.badge = block.id;
+    badge.textContent = "0%";
+    head.append(titleWrap, badge);
+    article.append(head);
+
+    if (block.context) {
+      const context = document.createElement("p");
+      context.className = "context";
+      context.textContent = block.context;
+      article.append(context);
+    }
+
+    const list = document.createElement("div");
+    list.className = "task-list";
+    list.dataset.list = block.id;
+    article.append(list);
+    blocksContainer.append(article);
+  });
 }
 
 function renderTasks() {
@@ -254,6 +422,7 @@ function setupSync() {
   });
 }
 
+renderShell();
 renderTasks();
 setupTabs();
 setupNotes();
